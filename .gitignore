@@ -1,0 +1,36 @@
+# VS / build artifacts
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# IDE
+.vs/
+.idea/
+.vscode/
+
+# Scaffolding
+ScaffoldingReadMe.txt
+
+# NuGet
+*.nupkg
+*/packages/
+
+# Frontend libs
+node_modules/
+wwwroot/lib/
