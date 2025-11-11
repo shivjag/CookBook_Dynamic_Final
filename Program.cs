@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using CookBook_CSharp.Data;
+using CookBook_Dynamic_Final.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
