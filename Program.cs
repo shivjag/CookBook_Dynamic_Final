@@ -1,44 +1,70 @@
 using Microsoft.EntityFrameworkCore;
-using CookBook_Dynamic_Final.Data;
+  using CookBook_Dynamic_Final.Data;
 
-var builder = WebApplication.CreateBuilder(args);
+  var builder = WebApplication.CreateBuilder(args);
 
-// MVC
-builder.Services.AddControllersWithViews();
+  // MVC
+  builder.Services.AddControllersWithViews();
 
-// SQLite
-var connectionString =
-    builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Data Source=cookbook.db";
+  // SQLite Connection - Different paths for local vs Azure
+  var connectionString =
+  builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<CookBookDbContext>(options =>
-    options.UseSqlite(connectionString));
+  if (string.IsNullOrEmpty(connectionString))
+  {
+      if (builder.Environment.IsProduction())
+      {
+          // Azure: MUST use /home/data for persistent storage
+          connectionString = "Data Source=/home/data/cookbook.db";
+      }
+      else
+      {
+          // Local development: project root
+          connectionString = "Data Source=cookbook.db";
+      }
+  }
 
-// HttpClient for API calls
-builder.Services.AddHttpClient();
+  builder.Services.AddDbContext<CookBookDbContext>(options =>
+      options.UseSqlite(connectionString));
 
-var app = builder.Build();
+  // HttpClient for API calls
+  builder.Services.AddHttpClient();
 
-// Ensure DB exists (fine for SQLite dev)
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<CookBookDbContext>();
-    dbContext.Database.EnsureCreated();
-}
+  var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-    app.UseHttpsRedirection();
-}
+  // Database initialization - runs on every startup
+  using (var scope = app.Services.CreateScope())
+  {
+      var dbContext =
+  scope.ServiceProvider.GetRequiredService<CookBookDbContext>();
 
-app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthorization();
+      // Create persistent data directory on Azure
+      if (app.Environment.IsProduction())
+      {
+          var dbDirectory = "/home/data";
+          if (!Directory.Exists(dbDirectory))
+          {
+              Directory.CreateDirectory(dbDirectory);
+          }
+      }
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+      // Create database and tables if they don't exist
+      dbContext.Database.EnsureCreated();
+  }
 
-app.Run();
+  if (!app.Environment.IsDevelopment())
+  {
+      app.UseExceptionHandler("/Home/Error");
+      app.UseHsts();
+      app.UseHttpsRedirection();
+  }
+
+  app.UseStaticFiles();
+  app.UseRouting();
+  app.UseAuthorization();
+
+  app.MapControllerRoute(
+      name: "default",
+      pattern: "{controller=Home}/{action=Index}/{id?}");
+
+  app.Run();
