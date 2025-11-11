@@ -17,7 +17,6 @@ namespace CookBook_Dynamic_Final.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Table configuration
             modelBuilder.Entity<Recipe>(entity =>
             {
                 entity.ToTable("recipes");

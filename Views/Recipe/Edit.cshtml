@@ -1,0 +1,59 @@
+@model CookBook_CSharp.Models.Recipe
+
+  <div class="card">
+      <h2>Edit Recipe</h2>
+      <form method="post" action="/Recipe/Edit/@Model.Id">
+          @Html.AntiForgeryToken()
+          <input type="hidden" name="Id" value="@Model.Id" />
+          <input type="hidden" name="CreatedAt" value="@Model.CreatedAt" />
+
+          <div class="form-group">
+              <label for="Title">Recipe Name</label>
+              <input type="text" name="Title" id="Title" 
+  value="@Model.Title" required />
+          </div>
+
+          <div class="form-group">
+              <label for="Category">Category</label>
+              <select name="Category" id="Category">
+                  <option value="Breakfast" selected="@(Model.Category == 
+  "Breakfast")">Breakfast</option>
+                  <option value="Lunch" selected="@(Model.Category == 
+  "Lunch")">Lunch</option>
+                  <option value="Dinner" selected="@(Model.Category == 
+  "Dinner")">Dinner</option>
+                  <option value="Dessert" selected="@(Model.Category == 
+  "Dessert")">Dessert</option>
+                  <option value="Snack" selected="@(Model.Category == 
+  "Snack")">Snack</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+              <label for="ingredientsString">Ingredients (comma 
+  separated)</label>
+              <input type="text" name="ingredientsString" 
+  id="ingredientsString"
+                     value="@ViewBag.IngredientsString" placeholder="e.g. 
+  flour, eggs, milk" />
+          </div>
+
+          <div class="form-group">
+              <label for="Instructions">Instructions</label>
+              <textarea name="Instructions" id="Instructions" 
+  rows="6">@Model.Instructions</textarea>
+          </div>
+
+          <div class="form-group">
+              <label for="Rating">Rating (0-5)</label>
+              <input type="number" name="Rating" id="Rating" min="0" max="5"
+   step="0.1" value="@Model.Rating" />
+          </div>
+
+          <div class="button-group">
+              <button type="submit" class="btn">Update Recipe</button>
+              <a href="/Recipe" class="btn" style="background: #d3d3d3; 
+  color: #333;">Cancel</a>
+          </div>
+      </form>
+    </div>

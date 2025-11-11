@@ -18,7 +18,6 @@ namespace CookBook_Dynamic_Final.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        // Search recipes using Forkify API
         [HttpGet("search")]
         public async Task<IActionResult> SearchRecipes([FromQuery] string query)
         {
@@ -51,7 +50,6 @@ namespace CookBook_Dynamic_Final.Controllers
             }
         }
 
-        // Get single recipe details
         [HttpGet("recipe/{id}")]
         public async Task<IActionResult> GetRecipeDetails(string id)
         {
@@ -97,7 +95,6 @@ namespace CookBook_Dynamic_Final.Controllers
             }
         }
 
-        // Local DB stats endpoint
         [HttpGet("stats")]
         public async Task<IActionResult> GetStats()
         {
@@ -127,7 +124,6 @@ namespace CookBook_Dynamic_Final.Controllers
             }
         }
 
-        // Helper DTOs
         public class ForkifySearchResponse
         {
             public string? status { get; set; }
