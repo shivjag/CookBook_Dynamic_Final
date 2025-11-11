@@ -7,7 +7,7 @@
     workflow_dispatch:
 
   env:
-    AZURE_WEBAPP_NAME: cookbook-app
+    AZURE_WEBAPP_NAME: cookbook-finalproject-2025
     DOTNET_VERSION: '8.0.x'
 
   jobs:
