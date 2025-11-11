@@ -40,7 +40,7 @@ namespace CookBook_Dynamic_Final.Controllers
                     id = r.id,
                     title = r.title,
                     image = r.image_url
-                }).ToList() ?? new List<object>();
+                }).ToList();
 
                 return Ok(new { results });
             }
@@ -73,7 +73,7 @@ namespace CookBook_Dynamic_Final.Controllers
                     name = ing.description,
                     amount = ing.quantity ?? 0,
                     unit = ing.unit ?? ""
-                }).ToList() ?? new List<object>();
+                }).ToList();
 
                 var recipe = new
                 {
@@ -84,7 +84,8 @@ namespace CookBook_Dynamic_Final.Controllers
                     sourceUrl = recipeData.source_url,
                     servings = recipeData.servings ?? 4,
                     readyInMinutes = recipeData.cooking_time ?? 30,
-                    extendedIngredients = ingredients
+                    extendedIngredients = ingredients,
+                    instructions = "See source URL for full instructions"
                 };
 
                 return Ok(recipe);

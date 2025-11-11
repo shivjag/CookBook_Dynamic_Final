@@ -1,114 +1,56 @@
-@model IEnumerable<CookBook_CSharp.Models.Recipe>
+﻿<section class="hero">
+    <h2>Find Recipes Instantly</h2>
+    <p>Search by ingredient or cuisine and explore popular dishes.</p>
 
-  <div class="card">
-      <h2>My Recipes</h2>
-      <div style="display: flex; justify-content: space-between;
-  align-items: center; margin-bottom: 1.5rem;">
-          <a href="/Recipe/Create" class="btn">Add New Recipe</a>
+    <div class="search-container">
+        <input id="searchInput" type="text" placeholder="e.g. pasta, chicken, biryani" />
+        <button onclick="searchRecipes()">Search</button>
+    </div>
 
-          <!-- Filter buttons -->
-          <div class="filter-buttons" style="display: flex; gap: 0.5rem;">
-              <a href="/Recipe/Index?filter=all" class="btn btn-small
-  @(ViewBag.CurrentFilter == "all" ? "active" : "")"
-                 style="background: @(ViewBag.CurrentFilter == "all" ?
-  "#a8e6cf" : "#d3d3d3"); color: #333;">All</a>
-              <a href="/Recipe/Index?filter=untried" class="btn btn-small
-  @(ViewBag.CurrentFilter == "untried" ? "active" : "")"
-                 style="background: @(ViewBag.CurrentFilter == "untried" ?
-  "#ffd9b3" : "#d3d3d3"); color: #333;">Untried</a>
-              <a href="/Recipe/Index?filter=tried" class="btn btn-small
-  @(ViewBag.CurrentFilter == "tried" ? "active" : "")"
-                 style="background: @(ViewBag.CurrentFilter == "tried" ?
-  "#a3c9f1" : "#d3d3d3"); color: #333;">Tried</a>
-              <a href="/Recipe/Index?filter=favorites" class="btn btn-small
-  @(ViewBag.CurrentFilter == "favorites" ? "active" : "")"
-                 style="background: @(ViewBag.CurrentFilter == "favorites" ?
-   "#ffb3b3" : "#d3d3d3"); color: #333;">⭐ Favorites</a>
-          </div>
-      </div>
+    <div id="results" class="results-grid"></div>
+</section>
 
-      @if (!Model.Any())
-      {
-          <p style="text-align: center; color: var(--text-light);
-  margin-top: 2rem;">
-              No recipes yet. Start by adding your first recipe!
-          </p>
-      }
-      else
-      {
-          <div class="results-grid">
-              @foreach (var recipe in Model)
-              {
-                  <div class="recipe-card" style="position: relative;
-  @(recipe.IsTried ? "border-left: 4px solid #2ecc71;" : "")">
-                      <!-- Visual indicators -->
-                      <div style="position: absolute; top: 10px; right:
-  10px; display: flex; gap: 5px;">
-                          @if (recipe.IsFavorite)
-                          {
-                              <span style="font-size: 1.5rem;"
-  title="Favorite">⭐</span>
-                          }
-                          @if (recipe.IsTried)
-                          {
-                              <span style="font-size: 1.5rem;"
-  title="Tried">✅</span>
-                          }
-                      </div>
+<section class="card" style="max-width: 1200px; margin: 2rem auto;">
+    <h2 style="text-align: center; color: var(--primary-orange); margin-bottom: 2rem;">
+        📊 Your Recipe Collection Stats
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center;">
+        <div style="padding: 2rem; background: var(--cream); border-radius: 15px; transition: transform 0.3s ease;">
+            <h3 style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 0.5rem;" id="totalRecipes">0</h3>
+            <p style="color: var(--text-dark); font-weight: 600;">Total Recipes</p>
+        </div>
+        <div style="padding: 2rem; background: var(--cream); border-radius: 15px; transition: transform 0.3s ease;">
+            <h3 style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 0.5rem;" id="avgRating">0</h3>
+            <p style="color: var(--text-dark); font-weight: 600;">Average Rating</p>
+        </div>
+        <div style="padding: 2rem; background: var(--cream); border-radius: 15px; transition: transform 0.3s ease;">
+            <h3 style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 0.5rem; text-transform: capitalize;" id="topCategory">-</h3>
+            <p style="color: var(--text-dark); font-weight: 600;">Top Category</p>
+        </div>
+    </div>
+</section>
 
-                      <h3>@recipe.Title</h3>
-                      <p><strong>Category:</strong> @(recipe.Category ??
-  "Uncategorized")</p>
-                      <p><strong>Rating:</strong>
-  @(recipe.Rating?.ToString("0.0") ?? "No rating")</p>
+<div id="recipeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="recipeDetails">
+            <div class="loading">Loading recipe details...</div>
+        </div>
+    </div>
+</div>
 
-                      @if (recipe.LastCookedDate.HasValue)
-                      {
-                          <p style="font-size: 0.9rem; color:
-  var(--text-light);">
-                              <strong>Last Cooked:</strong>
-  @recipe.LastCookedDate.Value.ToString("MMM dd, yyyy")
-                          </p>
-                      }
-
-                      <!-- Quick action buttons -->
-                      <div style="display: flex; gap: 0.5rem; margin-bottom:
-   0.5rem;">
-                          <form method="post"
-  action="/Recipe/MarkAsTried/@recipe.Id" style="display: inline;">
-                              @Html.AntiForgeryToken()
-                              <button type="submit" class="btn btn-small"
-                                      style="background: @(recipe.IsTried ?
-  "#d3d3d3" : "#a8e6cf"); color: #333; font-size: 0.85rem;">
-                                  @(recipe.IsTried ? "✅ Tried" : "Mark as Tried")
-                              </button>
-                          </form>
-                          <form method="post"
-  action="/Recipe/ToggleFavorite/@recipe.Id" style="display: inline;">
-                              @Html.AntiForgeryToken()
-                              <button type="submit" class="btn btn-small"
-                                      style="background: @(recipe.IsFavorite
-   ? "#ffb3b3" : "#ffe4b3"); color: #333; font-size: 0.85rem;">
-                                  @(recipe.IsFavorite ? "⭐" : "☆")
-                              </button>
-                          </form>
-                      </div>
-
-                      <div class="button-group">
-                          <a href="/Recipe/Details/@recipe.Id" class="btn
-  btn-small">View</a>
-                          <a href="/Recipe/Edit/@recipe.Id" class="btn
-  btn-small" style="background: #a3c9f1; color: #333;">Edit</a>
-                          <form method="post"
-  action="/Recipe/Delete/@recipe.Id" style="display: inline;">
-                              @Html.AntiForgeryToken()
-                              <button type="submit" class="btn btn-small"
-  style="background: #ffb3b3; color: #333;"
-                                      onclick="return confirm('Are you sure you want to delete this recipe?')">Delete</button>
-                          </form>
-                      </div>
-                  </div>
-              }
-          </div>
-      }
-  </div>
+@section Scripts {
+    <script src="~/js/search.js"></script>
+    <script>
+        fetch('/api/stats')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('totalRecipes').textContent = data.totalRecipes;
+                document.getElementById('avgRating').textContent = data.avgRating ? data.avgRating.toFixed(1) : '0';
+                document.getElementById('topCategory').textContent = data.topCategory || 'None';
+            })
+            .catch(err => {
+                console.error('Error fetching stats:', err);
+            });
+    </script>
+}

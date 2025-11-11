@@ -1,0 +1,30 @@
+@model CookBook_Dynamic_Final.Models.Contact
+
+<div class="card">
+    <h2>Contact Us</h2>
+    <p>Have questions or feedback? We'd love to hear from you!</p>
+
+    <form method="post" action="/Contact/Submit">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label for="Name">Your Name</label>
+            <input type="text" name="Name" id="Name" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Your Email</label>
+            <input type="email" name="Email" id="Email" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Message">Message</label>
+            <textarea name="Message" id="Message" rows="6" required></textarea>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn">Send Message</button>
+            <a href="/" class="btn" style="background: #d3d3d3; color: #333;">Cancel</a>
+        </div>
+    </form>
+</div>
