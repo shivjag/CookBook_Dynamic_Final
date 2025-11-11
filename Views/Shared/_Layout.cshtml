@@ -1,0 +1,116 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>CookBook - Discover Amazing Recipes</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;
+  400;500;600;700;800&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="~/css/style.css">
+  </head>
+  <body>
+
+  <header>
+      <h1>🍳 CookBook</h1>
+      <div style="display: flex; align-items: center; gap: 2rem;">
+          <nav>
+              <a href="/">Home</a>
+              <a href="/Recipe">My Recipes <span id="recipeCount"
+                                                  style="background:
+  var(--primary-orange); color: white; padding: 0.2rem 0.6rem;
+                  border-radius: 20px; font-size: 0.9rem; margin-left:
+  0.5rem;">0</span></a>
+              <a href="/Home/About">About</a>
+              <a href="/Contact">Contact Us</a>
+          </nav>
+          <button class="theme-toggle" onclick="toggleTheme()"
+  aria-label="Toggle dark mode">
+              <span class="theme-icon" id="themeIcon">🌙</span>
+          </button>
+      </div>
+  </header>
+
+  <main>
+      @RenderBody()
+  </main>
+
+  <footer>
+      <p>© 2025 CookBook Project | Made with ❤ for Food Lovers</p>
+  </footer>
+
+  <div id="toast" style="position: fixed; bottom: 20px; right: 20px; 
+  background: var(--primary-orange);
+      color: white; padding: 1rem 2rem; border-radius: 10px; box-shadow: 0 
+  5px 20px rgba(0,0,0,0.3);
+      display: none; z-index: 9999; animation: slideUp 0.3s ease;">
+      <span id="toastMessage"></span>
+  </div>
+
+  <style>
+      @@keyframes slideUp {
+          from {
+              transform: translateY(100px);
+              opacity: 0;
+          }
+          to {
+              transform: translateY(0);
+              opacity: 1;
+          }
+      }
+  </style>
+
+  <script>
+      function toggleTheme() {
+          const currentTheme =
+  document.documentElement.getAttribute('data-theme');
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          const themeIcon = document.getElementById('themeIcon');
+
+          document.documentElement.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+
+          themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      }
+
+      (function() {
+          const savedTheme = localStorage.getItem('theme') || 'light';
+          const themeIcon = document.getElementById('themeIcon');
+
+          document.documentElement.setAttribute('data-theme', savedTheme);
+          if (themeIcon) {
+              themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+          }
+      })();
+
+      function showToast(message, type = 'success') {
+          const toast = document.getElementById('toast');
+          const toastMessage = document.getElementById('toastMessage');
+
+          toast.style.background = type === 'success' ?
+  'var(--primary-orange)' : '#e74c3c';
+          toastMessage.textContent = message;
+          toast.style.display = 'block';
+
+          setTimeout(() => {
+              toast.style.display = 'none';
+          }, 3000);
+      }
+
+      @if (TempData["Success"] != null)
+      {
+          <text>showToast('@TempData["Success"]');</text>
+      }
+
+      fetch('/api/stats')
+          .then(res => res.json())
+          .then(data => {
+              const badge = document.getElementById('recipeCount');
+              if (badge) badge.textContent = data.totalRecipes;
+          })
+          .catch(err => console.error('Error fetching stats:', err));
+  </script>
+  @await RenderSectionAsync("Scripts", required: false)
+  </body>
+  </html>

@@ -1,0 +1,80 @@
+<script 
+  src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusi
+  ve.min.js"></script>
+
+  ---
+  File 7: Views/Home/Index.cshtml
+
+  <section class="hero">
+      <h2>Find Recipes Instantly</h2>
+      <p>Search by ingredient or cuisine and explore popular dishes.</p>
+
+      <div class="search-container">
+          <input id="searchInput" type="text" placeholder="e.g. pasta,
+  chicken, biryani" />
+          <button onclick="searchRecipes()">Search</button>
+      </div>
+
+      <div id="results" class="results-grid"></div>
+  </section>
+
+  <section class="card" style="max-width: 1200px; margin: 2rem auto;">
+      <h2 style="text-align: center; color: var(--primary-orange);
+  margin-bottom: 2rem;">
+          📊 Your Recipe Collection Stats
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap:
+   2rem; text-align: center;">
+          <div style="padding: 2rem; background: var(--cream);
+  border-radius: 15px; transition: transform 0.3s ease;">
+              <h3 style="font-size: 3rem; color: var(--primary-orange);
+  margin-bottom: 0.5rem;" id="totalRecipes">0</h3>
+              <p style="color: var(--text-dark); font-weight: 600;">Total
+  Recipes</p>
+          </div>
+          <div style="padding: 2rem; background: var(--cream);
+  border-radius: 15px; transition: transform 0.3s ease;">
+              <h3 style="font-size: 3rem; color: var(--primary-orange);
+  margin-bottom: 0.5rem;" id="avgRating">0</h3>
+              <p style="color: var(--text-dark); font-weight: 600;">Average
+  Rating</p>
+          </div>
+          <div style="padding: 2rem; background: var(--cream);
+  border-radius: 15px; transition: transform 0.3s ease;">
+              <h3 style="font-size: 3rem; color: var(--primary-orange);
+  margin-bottom: 0.5rem; text-transform: capitalize;"
+  id="topCategory">-</h3>
+              <p style="color: var(--text-dark); font-weight: 600;">Top
+  Category</p>
+          </div>
+      </div>
+  </section>
+
+  <div id="recipeModal" class="modal">
+      <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <div id="recipeDetails">
+              <div class="loading">Loading recipe details...</div>
+          </div>
+      </div>
+  </div>
+
+  @section Scripts {
+      <script src="~/js/search.js"></script>
+      <script>
+          fetch('/api/stats')
+              .then(res => res.json())
+              .then(data => {
+                  document.getElementById('totalRecipes').textContent =
+  data.totalRecipes;
+                  document.getElementById('avgRating').textContent =
+  data.avgRating ? data.avgRating.toFixed(1) : '0';
+                  document.getElementById('topCategory').textContent =
+  data.topCategory || 'None';
+              })
+              .catch(err => {
+                  console.error('Error fetching stats:', err);
+              });
+      </script>
+  }

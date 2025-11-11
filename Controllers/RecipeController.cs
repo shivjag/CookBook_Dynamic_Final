@@ -18,7 +18,6 @@
           {
               var recipesQuery = _context.Recipes.AsQueryable();
 
-              // Apply filters based on recipe status
               switch (filter.ToLower())
               {
                   case "untried":
@@ -30,7 +29,6 @@
                   case "tried":
                       recipesQuery = recipesQuery.Where(r => r.IsTried);
                       break;
-                  // "all" shows everything (default)
               }
 
               var recipes = await recipesQuery
