@@ -1,8 +1,8 @@
-<section class="card">
+  <section class="card">
       <h2>Team & Roles</h2>
       <ul style="list-style-type: disc; padding-left: 20px;">
           <li style="margin-bottom: 15px; line-height: 1.6;">
-              <strong>Member 1 – Shivani Jagannatham – Frontend Design & UI
+              <strong>Shivani Jagannatham – Frontend Design & UI
   Lead:</strong>
               Designed and implemented the overall layout and visual
   components using Razor views and CSS, developed navigation and responsive
@@ -10,7 +10,7 @@
   UI consistency through testing and quality assurance.
           </li>
           <li style="margin-bottom: 15px; line-height: 1.6;">
-              <strong>Member 2 – Revanth Malisetty – CRUD Functionality
+              <strong>Revanth Malisetty – CRUD Functionality
   Engineer:</strong>
               Designed and implemented complete CRUD operations for recipes
   and ingredients, developed MVC-based models, controllers, and routes,
@@ -18,7 +18,7 @@
   and ensured data synchronization between backend logic and user interface.
           </li>
           <li style="margin-bottom: 15px; line-height: 1.6;">
-              <strong>Member 3 – Rishika Katna – Data & API Integration
+              <strong>Rishika Katna – Data & API Integration
   Engineer:</strong>
               Implemented dynamic API integration with Forkify API, built
   Entity Framework Core database context and models, handled API endpoints
@@ -26,8 +26,8 @@
   functionality, ensured data persistence and MVC consistency.
           </li>
           <li style="margin-bottom: 15px; line-height: 1.6;">
-              <strong>Member 4 – Praneeth Venkata Sai Eluri – Platform &
-  Integration Engineer:</strong>
+              <strong>Praneeth Venkata Sai Eluri – Platform & Integration
+  Engineer:</strong>
               Set up and managed the environment configuration
   (appsettings.json), resolved SQLite database path and migration issues,
   configured Program.cs and dependency injection, handled Git merge
@@ -41,37 +41,139 @@
       <h2>Entity-Relationship Diagram</h2>
       <div style="text-align: center; padding: 20px; background-color:
   #f9f9f9; border-radius: 8px; margin: 20px 0;">
-
-  <p style="color: var(--text-light); font-style: italic;">ERD Image:</p>
-  <img src="/assets/ERD.png" alt="Entity Relationship Diagram" 
-  style="max-width: 100%; height: auto; margin-top: 1rem; border-radius: 
-  8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <p style="color: var(--text-light); font-style: italic;
+  margin-bottom: 1rem;">Database Schema Design:</p>
+          <img src="/assets/ERD.png" alt="Entity Relationship Diagram"
+               style="max-width: 100%; height: auto; border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
       </div>
-      <p class="help" style="color: var(--text-light); font-style: italic;
-  margin-top: 15px;">
-          Database schema is defined in
-  <code>Data/CookBookDbContext.cs</code> and uses Entity Framework Core
-  migrations.
+      <p style="color: var(--text-light); font-style: italic; margin-top:
+  15px;">
+          The database schema is defined in
+  <code>Data/CookBookDbContext.cs</code> and uses Entity Framework Core with
+   SQLite.
+          It implements a one-to-many relationship between Recipes and
+  Ingredients with cascade delete functionality.
       </p>
   </section>
 
   <section class="card">
-      <h2>Links</h2>
-      <ul style="list-style-type: disc; padding-left: 20px;">
-          <li style="margin-bottom: 10px;">
-              <a href="https://github.com/shivjag/CookBook_Dynamic_Final" target="_blank">GitHub Repository</a> 
-          </li>
-          <li style="margin-bottom: 10px;">
-              <a href="#" target="_blank">Live App (Azure)</a> 
-          </li>
-      </ul>
+      <h2>Technical Documentation</h2>
+      <p style="margin-bottom: 1.5rem; line-height: 1.8;">
+          For comprehensive technical details about this project, please
+  refer to our
+          <a href="https://github.com/shivjag/CookBook_Dynamic_Final"
+  target="_blank" style="color: var(--primary-orange); font-weight:
+  bold;">GitHub Repository README</a>,
+          which includes:
+      </p>
+
+      <div style="background-color: #f9f9f9; padding: 1.5rem; border-radius:
+   8px; margin-bottom: 1.5rem;">
+          <h3 style="color: var(--primary-orange); margin-top: 0;">📋 What's
+   in the README:</h3>
+          <ul style="list-style-type: none; padding-left: 0;">
+              <li style="margin-bottom: 12px; padding-left: 25px; position:
+  relative;">
+                  <span style="position: absolute; left: 0; color:
+  var(--primary-orange);">✓</span>
+                  <strong>API Endpoints:</strong> Complete documentation of
+  all REST API routes including recipe search, CRUD operations, and
+  statistics endpoints
+              </li>
+              <li style="margin-bottom: 12px; padding-left: 25px; position:
+  relative;">
+                  <span style="position: absolute; left: 0; color:
+  var(--primary-orange);">✓</span>
+                  <strong>Data Model & Database Schema:</strong> Detailed
+  table structures for Recipes, Ingredients, and Contacts with foreign key
+  relationships
+              </li>
+              <li style="margin-bottom: 12px; padding-left: 25px; position:
+  relative;">
+                  <span style="position: absolute; left: 0; color:
+  var(--primary-orange);">✓</span>
+                  <strong>CRUD Implementation:</strong> Overview of MVC
+  architecture, Entity Framework Core usage, and controller logic with code
+  examples
+              </li>
+              <li style="margin-bottom: 12px; padding-left: 25px; position:
+  relative;">
+                  <span style="position: absolute; left: 0; color:
+  var(--primary-orange);">✓</span>
+                  <strong>Technical Challenges & Solutions:</strong>
+  Discussion of learning Entity Framework Core, handling related data,
+  async/await patterns, and security implementations
+              </li>
+              <li style="margin-bottom: 12px; padding-left: 25px; position:
+  relative;">
+                  <span style="position: absolute; left: 0; color:
+  var(--primary-orange);">✓</span>
+                  <strong>Project Structure:</strong> Complete folder
+  organization and file descriptions
+              </li>
+              <li style="margin-bottom: 0; padding-left: 25px; position:
+  relative;">
+                  <span style="position: absolute; left: 0; color:
+  var(--primary-orange);">✓</span>
+                  <strong>Getting Started Guide:</strong> Installation
+  instructions, prerequisites, and how to run the application
+              </li>
+          </ul>
+      </div>
+
+      <div style="text-align: center;">
+          <a href="https://github.com/shivjag/CookBook_Dynamic_Final"
+  target="_blank"
+             class="btn" style="display: inline-block; padding: 12px 24px;
+  background: var(--primary-orange); color: white; text-decoration: none;
+  border-radius: 8px; font-weight: bold;">
+              View Full Technical Documentation on GitHub
+          </a>
+      </div>
+  </section>
+
+  <section class="card">
+      <h2>Project Links</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap:
+  1rem;">
+          <div style="background-color: #f9f9f9; padding: 1.5rem;
+  border-radius: 8px; text-align: center;">
+              <h3 style="color: var(--primary-orange); margin-top: 0;">🔗
+  GitHub Repository</h3>
+              <p style="margin-bottom: 1rem;">Source code and
+  documentation</p>
+              <a href="https://github.com/shivjag/CookBook_Dynamic_Final"
+  target="_blank"
+                 class="btn" style="display: inline-block; padding: 8px
+  16px; background: var(--primary-orange); color: white; text-decoration:
+  none; border-radius: 6px;">
+                  View Repository
+              </a>
+          </div>
+          <div style="background-color: #f9f9f9; padding: 1.5rem;
+  border-radius: 8px; text-align: center;">
+              <h3 style="color: var(--primary-orange); margin-top: 0;">
+  Live Application</h3>
+              <p style="margin-bottom: 1rem;">Deployed on Azure App
+  Service</p>
+              <a href="#" target="_blank"
+                 class="btn" style="display: inline-block; padding: 8px
+  16px; background: #d3d3d3; color: #333; text-decoration: none;
+  border-radius: 6px;">
+                  To be Added 
+              </a>
+          </div>
+      </div>
   </section>
 
   <div style="text-align: center; margin-top: 40px; padding: 20px; 
   background-color: #fff5e6; border-radius: 8px;">
       <p style="color: var(--text-dark); font-size: 16px; margin: 0;">
-          <strong>Course:</strong> ISM 6225 - Final Project<br>
+          <strong>Course:</strong> ISM 6225 - Distributed Information
+  Systems<br>
           <strong>Institution:</strong> University of South Florida, Muma
-  College of Business
+  College of Business<br>
+          <strong>Semester:</strong> Fall 2025
       </p>
   </div>
